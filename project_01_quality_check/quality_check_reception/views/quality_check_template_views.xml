@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_quality_check_template_list" model="ir.ui.view">
+        <field name="name">quality.check.template.list</field>
+        <field name="model">quality.check.template</field>
+        <field name="arch" type="xml">
+            <list string="Quality Check Templates">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="product_category_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_quality_check_template_form" model="ir.ui.view">
+        <field name="name">quality.check.template.form</field>
+        <field name="model">quality.check.template</field>
+        <field name="arch" type="xml">
+            <form string="Quality Check Template">
+
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="product_id"/>
+                        <field name="product_category_id"/>
+                        <field name="active"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Lines">
+                            <field name="line_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="sequence"/>
+                                    <field name="check_type"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_quality_check_template" model="ir.actions.act_window">
+        <field name="name">Quality Check Templates</field>
+        <field name="res_model">quality.check.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_quality_check_root" name="Quality Check">
+        <menuitem id="menu_quality_check_configuration" name="Configuration">
+            <menuitem id="menu_quality_check_template" action="action_quality_check_template"/>
+        </menuitem>
+    </menuitem>
+
+</odoo>
