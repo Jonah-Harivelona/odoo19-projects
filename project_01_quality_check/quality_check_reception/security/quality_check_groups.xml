@@ -12,19 +12,19 @@
         <field name="category_id" ref="quality_check_reception_category"/>
     </record>
 
-    <record id="group_quality_controller" model="res.groups">
+    <record id="quality_check_reception.group_quality_controller" model="res.groups">
         <field name="name">Contrôleur de Qualité</field>
         <field name="privilege_id" ref="quality_check_privilege"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
-    <record id="group_quality_manager" model="res.groups">
+    <record id="quality_check_reception.group_quality_manager" model="res.groups">
         <field name="name">Responsable Qualité</field>
         <field name="privilege_id" ref="quality_check_privilege"/>
         <field name="implied_ids" eval="[(4, ref('group_quality_controller'))]"/>
     </record>
 
-    <record id="group_quality_admin" model="res.groups">
+    <record id="quality_check_reception.group_quality_admin" model="res.groups">
         <field name="name">Administrateur Qualité</field>
         <field name="privilege_id" ref="quality_check_privilege"/>
         <field name="implied_ids"  eval="[(4, ref('group_quality_manager'))]"/>
