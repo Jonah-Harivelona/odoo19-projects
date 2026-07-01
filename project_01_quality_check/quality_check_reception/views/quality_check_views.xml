@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_quality_check_list" model="ir.ui.view">
+        <field name="name">quality.check.list</field>
+        <field name="model">quality.check</field>
+        <field name="arch" type="xml">
+            <list string="Quality Checks">
+                <field name="name"/>
+                <field name="picking_id"/>
+                <field name="conformity_rate"/>
+                <field name="state"/>
+                <field name="date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_quality_check_form" model="ir.ui.view">
+        <field name="name">quality.check.form</field>
+        <field name="model">quality.check</field>
+        <field name="arch" type="xml">
+            <form string="Quality Check">
+
+                <header>
+
+                    <button name="action_start"
+                            type="object"
+                            string="Démarrer"
+                            class="oe_highlight"
+                            invisible="state != 'draft'"
+                            data-hotkey="g"/>
+
+                    <button name="action_validate"
+                            type="object"
+                            string="Valider"
+                            class="oe_highlight"
+                            invisible="state != 'in_progress'"
+                            data-hotkey="v"/>
+
+                    <field name="state"
+                           widget="statusbar"
+                           readonly="1"
+                           statusbar_visible="draft,in_progress,passed,failed"/>
+
+                </header>
+
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="picking_id"/>
+                            <field name="template_id"/>
+                        </group>
+
+                        <group>
+                            <field name="date"/>
+                            <field name="user_id"/>
+                            <field name="conformity_rate" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+
+                        <page string="Résultats">
+
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="check_type"/>
+                                    <field name="result_ok_nok"/>
+                                    <field name="result_measure"/>
+                                    <field name="is_conforming"/>
+                                </list>
+                            </field>
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="view_quality_check_kanban" model="ir.ui.view">
+        <field name="name">quality.check.kanban</field>
+        <field name="model">quality.check</field>
+        <field name="arch" type="xml">
+            <kanban sample="1" default_group_by="state">
+
+                <field name="name"/>
+                <field name="state"/>
+                <field name="date"/>
+                <field name="conformity_rate"/>
+
+                <progressbar field="state"
+                             colors="{
+                                &quot;draft&quot;:&quot;warning&quot;,
+                                &quot;in_progress&quot;:&quot;info&quot;,
+                                &quot;passed&quot;:&quot;success&quot;,
+                                &quot;failed&quot;:&quot;danger&quot;
+                             }"/>
+
+                <templates>
+
+                    <t t-name="card">
+
+                        <div class="oe_kanban_global_click">
+
+                            <div class="fw-bold fs-5">
+                                <field name="name"/>
+                            </div>
+
+                            <div class="mt-1">
+                                <span>Date :</span>
+                                <field name="date"/>
+                            </div>
+
+                            <div class="mt-1">
+                                <span>Conformité :</span>
+                                <field name="conformity_rate"/>%
+                            </div>
+                           
+
+                        </div>
+
+                    </t>
+
+                </templates>
+
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_quality_check" model="ir.actions.act_window">
+        <field name="name">Quality Checks</field>
+        <field name="res_model">quality.check</field>
+        <field name="view_mode">list,kanban,form</field>
+    </record>
+
+
+</odoo>
